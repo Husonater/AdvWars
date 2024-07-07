@@ -1,3 +1,4 @@
+
 public abstract  class Ground extends Troops {
     /*status 0 heisst das sie auf dem Boden sind, 1 fuer Luft, 2 fuer Schiffe, dies kann man gebrauchen um spaeter ein switch case zu machen um 
     ground troops den access auf den See zu verweigern bsp. 

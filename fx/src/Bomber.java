@@ -1,9 +1,9 @@
-public class Fighterplain extends  Air{
+public class Bomber extends  Air{
     
 
 
     //Konstruktor um ein Objekt zu erzeugen, fuer dumme: das macht Soldat 1 und 2 usw.
-    public Fighterplain(){
+    public Bomber(){
         this.damage = 6; // Initialize damage to 4
         this.health = 10;
     }
