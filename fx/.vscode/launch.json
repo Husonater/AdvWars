@@ -1,0 +1,53 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+
+        {
+            "type": "java",
+            "name": "GUI",
+            "request": "launch",
+            "mainClass": "GUI",
+            "projectName": "AdvWar_a78e4ef6",
+            "vmArgs": "java --module-path \"C:/javaprj/SDK/javafx-sdk-22.0.1/lib\" --add-modules=javafx.controls"
+        },
+        {
+            "type": "java",
+            "name": "Karte",
+            "request": "launch",
+            "mainClass": "Karte",
+            "projectName": "AdvWar_a78e4ef6",
+            "vmArgs": "java --module-path \"C:/javaprj/SDK/javafx-sdk-22.0.1/lib\" --add-modules=javafx.controls"
+        },
+        {
+            "type": "java",
+            "name": "Fighterplain",
+            "request": "launch",
+            "mainClass": "Fighterplain",
+            "projectName": "AdvWar_a78e4ef6"
+        },
+        {
+            "type": "java",
+            "name": "Soldier",
+            "request": "launch",
+            "mainClass": "Soldier",
+            "projectName": "AdvWar_a78e4ef6"
+        },
+        {
+            "type": "java",
+            "name": "Air",
+            "request": "launch",
+            "mainClass": "Air",
+            "projectName": "AdvWar_a78e4ef6"
+        },
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}",
+            "vmArgs": "java --module-path \"C:/javaprj/SDK/javafx-sdk-22.0.1/lib\" --add-modules=javafx.controls"
+        }
+    ]
+}

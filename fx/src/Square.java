@@ -1,10 +1,17 @@
-public abstract  class Square extends Karte {
-    int size_h = 1;
-    int size_v = 1;//platzhalter
+public abstract class Square {
+    private int row;
+    private int col;
 
-    public int getSize(){
-        return size_h;
-    
+    public Square(int row, int col) {
+        this.row = row;
+        this.col = col;
     }
 
+    public int getRow() {
+        return row;
+    }
+
+    public int getCol() {
+        return col;
+    }
 }
