@@ -1,18 +1,25 @@
 import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class Karte extends Application {
 
-    private static final String IMAGE_PATH = "file:resources/images/LittleIsland.png";
+    private static final String LITTLE_ISLAND_IMAGE_PATH = "file:resources/images/LittleIsland.png";
+    private static final String EON_SPRINGS_IMAGE_PATH = "file:resources/images/EonSprings.png";
+    private static final String PISTON_DAM_IMAGE_PATH = "file:resources/images/PistonDam.png";
+
     private static final double MAP_WIDTH = 800; // Desired width of the map image
     private static final double MAP_HEIGHT = 600; // Desired height of the map image
-    private Image mapImage;
+
     private TerrainType[][] terrainMap; // Terrain information for each cell
     private ImageView mapView; // Declare mapView as a class attribute
     private StackPane stackPane; // Declare stackPane as a class attribute
@@ -34,11 +41,30 @@ public class Karte extends Application {
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Advance Wars: Little Island");
 
+        // Create the main menu with buttons to select the maps
+        Button littleIslandButton = new Button("Little Island");
+        littleIslandButton.setOnAction(e -> showMap(primaryStage, LITTLE_ISLAND_IMAGE_PATH, this::initializeTerrainMapForLittleIsland));
+
+        Button eonSpringsButton = new Button("Eon Springs");
+        eonSpringsButton.setOnAction(e -> showMap(primaryStage, EON_SPRINGS_IMAGE_PATH, this::initializeTerrainMapForEonSprings));
+
+        Button pistonDamButton = new Button("Piston Dam");
+        pistonDamButton.setOnAction(e -> showMap(primaryStage, PISTON_DAM_IMAGE_PATH, this::initializeTerrainMapForPistonDam));
+
+        VBox menu = new VBox(10, littleIslandButton, eonSpringsButton, pistonDamButton);
+        menu.setAlignment(Pos.CENTER);
+
+        Scene menuScene = new Scene(menu, MAP_WIDTH, MAP_HEIGHT);
+        primaryStage.setScene(menuScene);
+        primaryStage.show();
+    }
+
+    private void showMap(Stage primaryStage, String imagePath, Runnable initializeTerrainMap) {
         // Load the map image and set its dimensions
-        mapImage = new Image(IMAGE_PATH, MAP_WIDTH, MAP_HEIGHT, false, true);
+        Image mapImage = new Image(imagePath, MAP_WIDTH, MAP_HEIGHT, false, true);
 
         // Initialize terrainMap with example data (for demonstration)
-        initializeTerrainMap();
+        initializeTerrainMap.run();
 
         // Create ImageView with the map image
         mapView = new ImageView(mapImage);
@@ -57,15 +83,23 @@ public class Karte extends Application {
             double mouseX = event.getX();
             double mouseY = event.getY();
 
-            int gridX = (int) (mouseX / (MAP_WIDTH / 10)); // 10 is the number of columns (adjust as needed)
-            int gridY = (int) (mouseY / (MAP_HEIGHT / 10)); // 10 is the number of rows (adjust as needed)
+            int gridX = (int) (mouseX / (MAP_WIDTH / 20)); // 20 is the number of columns
+            int gridY = (int) (mouseY / (MAP_HEIGHT / 20)); // 20 is the number of rows
 
             // Display the terrain type behind the clicked grid
             displayTerrainType(gridX, gridY);
         });
 
+        // Create a back button to return to the main menu
+        Button backButton = new Button("Back");
+        backButton.setOnAction(e -> primaryStage.setScene(primaryStage.getScene()));
+
+        VBox vbox = new VBox(stackPane, backButton);
+        VBox.setMargin(backButton, new Insets(10));
+        vbox.setAlignment(Pos.TOP_CENTER);
+
         // Create a scene with the stacked layout, sized to match the map
-        Scene scene = new Scene(stackPane, MAP_WIDTH, MAP_HEIGHT);
+        Scene scene = new Scene(vbox, MAP_WIDTH, MAP_HEIGHT);
 
         // Set the scene to the stage
         primaryStage.setScene(scene);
@@ -85,44 +119,154 @@ public class Karte extends Application {
         primaryStage.show();
     }
 
-    // Helper method to initialize terrainMap with example data
-    private void initializeTerrainMap() {
-        terrainMap = new TerrainType[10][10]; // Assuming 10x10 grid (adjust as needed)
-        // Example initialization; customize as needed
-        for (int row = 0; row < terrainMap.length; row++) {
-            for (int col = 0; col < terrainMap[row].length; col++) {
-                if (row < 3 && col < 3) {
-                    terrainMap[row][col] = TerrainType.WATER;
-                } else if (row < 6 && col < 6) {
-                    terrainMap[row][col] = TerrainType.LAND;
-                } else if (row < 9 && col < 9) {
-                    terrainMap[row][col] = TerrainType.ROAD;
-                } else {
-                    terrainMap[row][col] = TerrainType.FOREST;
-                }
-            }
-        }
-    }
-
-    // Helper method to display terrain type behind the clicked grid
-    private void displayTerrainType(int gridX, int gridY) {
-        if (gridX >= 0 && gridX < terrainMap.length && gridY >= 0 && gridY < terrainMap[0].length) {
-            TerrainType terrainType = terrainMap[gridX][gridY];
-            System.out.println("Clicked on grid position (" + gridX + ", " + gridY + ") - Terrain: " + terrainType);
-            // Show the terrain type (for demonstration, you can customize this part)
-            // Text terrainLabel = new Text(terrainType.toString());
-            // StackPane.setAlignment(terrainLabel, javafx.geometry.Pos.CENTER);
-            // StackPane.setMargin(terrainLabel, new javafx.geometry.Insets(MAP_HEIGHT / 10 * gridY, 0, 0, MAP_WIDTH / 10 * gridX));
-            // stackPane.getChildren().add(terrainLabel);
-        }
-    }
-
-    // Helper method to center the stage on the screen
-    private void centerStage(Stage stage, double width, double height) {
+    // Method to center the stage on the screen
+    /* 
+    private void centerStage(Stage stage, double windowWidth, double windowHeight) {
+        // Get the screen bounds
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-        double centerX = (screenBounds.getWidth() - width) / 2;
-        double centerY = (screenBounds.getHeight() - height) / 2;
+
+        // Calculate the centered position for the stage
+        double centerX = screenBounds.getMinX() + (screenBounds.getWidth() - windowWidth) / 2;
+        double centerY = screenBounds.getMinY() + (screenBounds.getHeight() - windowHeight) / 2;
+
+        // Set the stage position
         stage.setX(centerX);
         stage.setY(centerY);
+    }
+
+    // Method to display the terrain type at the specified grid coordinates
+    private void displayTerrainType(int gridX, int gridY) {
+        if (terrainMap != null && gridX >= 0 && gridX < terrainMap.length && gridY >= 0 && gridY < terrainMap[0].length) {
+            TerrainType terrainType = terrainMap[gridX][gridY];
+            System.out.println("Terrain type at grid position (" + gridX + ", " + gridY + "): " + terrainType);
+            // You can add further logic here to visually display the terrain type if needed
+        } else {
+            System.out.println("Invalid grid position: (" + gridX + ", " + gridY + ")");
+        }
+    }
+    */
+    // Helper method to initialize terrainMap for Little Island
+    private void initializeTerrainMapForLittleIsland() {
+        terrainMap = new TerrainType[20][20]; // 20x20 grid
+        // Example initialization for Little Island
+        terrainMap = new TerrainType[][]{
+            {TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,
+             TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER},
+            {TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,
+             TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER},
+            {TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,
+             TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER},
+            {TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,
+             TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER},
+            {TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,
+             TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER},
+            {TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND,
+             TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND},
+            {TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND,
+             TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND},
+            {TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND,
+             TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND},
+            {TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND,
+             TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND},
+            {TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND,
+             TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND},
+            {TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD,
+             TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD},
+            {TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD,
+             TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD},
+            {TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD,
+             TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD},
+            {TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD,
+             TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD},
+            {TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD,
+             TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD},
+            {TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST,
+             TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST},
+            {TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST,
+             TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST},
+            {TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST,
+             TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST},
+            {TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST,
+             TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST}
+        };
+    }
+
+    // Helper method to initialize terrainMap for Eon Springs
+    private void initializeTerrainMapForEonSprings() {
+        terrainMap = new TerrainType[15][15]; // 15x15 grid
+        // Example initialization for Eon Springs
+        terrainMap = new TerrainType[][]{
+            {TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND,
+             TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND},
+            {TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND,
+             TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND},
+            {TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND,
+             TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND},
+            {TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND,
+             TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND},
+            {TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND,
+             TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND},
+            {TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND,
+             TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND},
+            {TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,
+             TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER},
+            {TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,
+             TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER},
+            {TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,
+             TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER},
+            {TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,
+             TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER},
+            {TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST,
+             TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST},
+            {TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST,
+             TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST},
+            {TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST,
+             TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST},
+            {TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST,
+             TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST}
+        };
+    }
+
+    // Helper method to initialize terrainMap for Piston Dam
+    private void initializeTerrainMapForPistonDam() {
+        terrainMap = new TerrainType[10][10]; // 10x10 grid
+        // Example initialization for Piston Dam
+        terrainMap = new TerrainType[][]{
+            {TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER},
+            {TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER},
+            {TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER},
+            {TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER},
+            {TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER},
+            {TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD},
+            {TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD},
+            {TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD},
+            {TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD},
+            {TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD}
+        };
+    }
+
+    // Method to center the stage on the screen
+    private void centerStage(Stage stage, double windowWidth, double windowHeight) {
+        // Get the screen bounds
+        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+
+        // Calculate the centered position for the stage
+        double centerX = screenBounds.getMinX() + (screenBounds.getWidth() - windowWidth) / 2;
+        double centerY = screenBounds.getMinY() + (screenBounds.getHeight() - windowHeight) / 2;
+
+        // Set the stage position
+        stage.setX(centerX);
+        stage.setY(centerY);
+    }
+
+    // Method to display the terrain type at the specified grid coordinates
+    private void displayTerrainType(int gridX, int gridY) {
+        if (terrainMap != null && gridX >= 0 && gridX < terrainMap.length && gridY >= 0 && gridY < terrainMap[0].length) {
+            TerrainType terrainType = terrainMap[gridX][gridY];
+            System.out.println("Terrain type at grid position (" + gridX + ", " + gridY + "): " + terrainType);
+            // You can add further logic here to visually display the terrain type if needed
+        } else {
+            System.out.println("Invalid grid position: (" + gridX + ", " + gridY + ")");
+        }
     }
 }

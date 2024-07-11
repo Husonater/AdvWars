@@ -26,21 +26,24 @@
             "name": "Fighterplain",
             "request": "launch",
             "mainClass": "Fighterplain",
-            "projectName": "AdvWar_a78e4ef6"
+            "projectName": "AdvWar_a78e4ef6",
+            "vmArgs": "java --module-path \"C:/javaprj/SDK/javafx-sdk-22.0.1/lib\" --add-modules=javafx.controls"
         },
         {
             "type": "java",
             "name": "Soldier",
             "request": "launch",
             "mainClass": "Soldier",
-            "projectName": "AdvWar_a78e4ef6"
+            "projectName": "AdvWar_a78e4ef6",
+            "vmArgs": "java --module-path \"C:/javaprj/SDK/javafx-sdk-22.0.1/lib\" --add-modules=javafx.controls"
         },
         {
             "type": "java",
             "name": "Air",
             "request": "launch",
             "mainClass": "Air",
-            "projectName": "AdvWar_a78e4ef6"
+            "projectName": "AdvWar_a78e4ef6",
+            "vmArgs": "java --module-path \"C:/javaprj/SDK/javafx-sdk-22.0.1/lib\" --add-modules=javafx.controls"
         },
         {
             "type": "java",
