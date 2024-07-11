@@ -6,6 +6,8 @@ public class Soldier extends  Ground{
     public Soldier(){
         this.damage = 4; // Initialize damage to 4
         this.health = 10;
+        this.characteristic = new String[]{"Forest","Land","Road"};
+
         //moverange fehlt noch
     }
 
@@ -16,10 +18,14 @@ public class Soldier extends  Ground{
     public int getHealth() {
         return health;
     }
+   public String[] getCharacticis() {
+        return characteristic;
+    }     
 
     public static void main(String[] args) {
         Fighterplain soldier1 = new Fighterplain();
         System.out.println("Soldier damage: " + soldier1.getDamage() + " Soldier health: " +soldier1.getHealth()); // Output: Soldier damage: 4
+        
 
 
 }
