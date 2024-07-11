@@ -1,6 +1,4 @@
 {
-    "java.project.sourcePaths": ["src"],
-    "java.project.outputPath": "bin",
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
         "c:\\javaprj\\SDK\\javafx-sdk-22.0.1\\lib\\javafx.base.jar",
