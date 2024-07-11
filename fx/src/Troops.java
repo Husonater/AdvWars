@@ -5,6 +5,7 @@ public abstract class Troops {
     int moverange;
     int damage;
     int health;
+    String[] characteristic; // welche Felder von welcher Truppe betreten werden darf (eigenschaften)
 
 
     // Ende Attribute
