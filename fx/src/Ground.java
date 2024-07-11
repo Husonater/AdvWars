@@ -21,21 +21,18 @@ public abstract class Ground extends Troops {
         public static boolean checkCharacteristic(Soldier soldier, String input) {
             if (isValidCharacteristic(soldier.getCharacticis(), input)) {
                 switch (input.toLowerCase()) { // Ensure the input is handled case-insensitively
-                    case "forest":
-                        System.out.println("Characteristic is Forest");
+                    case "WATER":
                         return true;
-                    case "land":
-                        System.out.println("Characteristic is Land");
+                    case "LAND":
                         return true;
-                    case "road":
-                        System.out.println("Characteristic is Road");
+                    case "ROAD":
+                        return true;
+                    case "FOREST":
                         return true;
                     default:
-                        System.out.println("Unknown characteristic");
                         return false;
                 }
             } else {
-                System.out.println("Input does not match any characteristic");
                 return false;
             }
         }
