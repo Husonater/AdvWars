@@ -6,7 +6,7 @@ public class Fighterplain extends  Air{
     public Fighterplain(){
         this.damage = 6; // Initialize damage to 4
         this.health = 10;
-        this.characteristic = new String[]{"Forest","Land","Road"};
+        
     }
 
     public int getDamage() {

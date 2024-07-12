@@ -27,7 +27,7 @@ public abstract class Troops {
                         return true;
                     case "land":
                         return true;
-                    case "road":
+                    case "sea":
                         return true;
                     case "forest":
                         return true;
@@ -40,9 +40,9 @@ public abstract class Troops {
         }
         public static void main(String[] args) {
             Soldier soldier = new Soldier();
-            System.out.println(checkCharacteristic(soldier, "foest")); // Test the method, should print true and "Characteristic is Forest"
-            System.out.println(checkCharacteristic(soldier, "road"));    // Test with an invalid input, should print false and "Input does not match any characteristic"
-            System.out.println(isValidCharacteristic(soldier.getCharacticis(), "frest"));
+            Fighterplain fighterplain= new Fighterplain();
+            System.out.println(checkCharacteristic(fighterplain, "sea")); // Test the method, should print true and "Characteristic is Forest"
+            
         }
     }
 

@@ -17,6 +17,9 @@ public abstract  class  Air extends Troops {
      */
     int status = 1;
 
+    public Air(){
+        this.characteristic = new String[]{"forest","land","sea"};
+    }
 
     public static void main(String[] args) {
         
