@@ -19,8 +19,8 @@ public class MechanizedInfantry extends  Ground{
     }
 
     public static void main(String[] args) {
-        MechanizedInfantry soldier1 = new MechanizedInfantry();
-        System.out.println("Soldier damage: " + soldier1.getDamage() + " Soldier health: " +soldier1.getHealth()); // Output: Soldier damage: 4
+        MechanizedInfantry mechanizedInfantry1 = new MechanizedInfantry();
+        System.out.println("Soldier damage: " + mechanizedInfantry1.getDamage() + " Soldier health: " +mechanizedInfantry1.getHealth()); // Output: Soldier damage: 4
 
 
 }

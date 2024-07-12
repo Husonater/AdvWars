@@ -11,8 +11,9 @@ public abstract class Ground extends Troops {
     }
  
     // Static nested class for checking characteristics
-        public static void main(String[] args) {
+    public static void main(String[] args) {
             
-        }
+            
+    }
     
 }

@@ -1,3 +1,7 @@
+//javac --module-path C:\javaprj\javafx-sdk-23\lib --add-modules javafx.controls,javafx.fxml -d bin C:\javaprj\AdvWar\fx\src\Karte.java  
+
+//java --module-path C:\javaprj\javafx-sdk-23\lib --add-modules javafx.controls,javafx.fxml -cp bin  C:\javaprj\AdvWar\fx\src\Karte.java 
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

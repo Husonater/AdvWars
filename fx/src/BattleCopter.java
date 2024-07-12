@@ -17,8 +17,8 @@ public class BattleCopter extends  Air{
     }
 
     public static void main(String[] args) {
-        Fighterplain fighterplain1 = new Fighterplain();
-        System.out.println("Soldier damage: " + fighterplain1.getDamage() + " Soldier health: " +fighterplain1.getHealth()); // Output: Soldier damage: 4
+        BattleCopter battleCopter1 = new BattleCopter();
+        System.out.println("Soldier damage: " + battleCopter1.getDamage() + " Soldier health: " +battleCopter1.getHealth()); // Output: Soldier damage: 4
 
 
 }

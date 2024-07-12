@@ -17,8 +17,8 @@ public class Bomber extends  Air{
     }
 
     public static void main(String[] args) {
-        Fighterplain fighterplain1 = new Fighterplain();
-        System.out.println("Soldier damage: " + fighterplain1.getDamage() + " Soldier health: " +fighterplain1.getHealth()); // Output: Soldier damage: 4
+        Bomber bomber1 = new Bomber();
+        System.out.println("Soldier damage: " + bomber1.getDamage() + " Soldier health: " +bomber1.getHealth()); // Output: Soldier damage: 4
 
 
 }

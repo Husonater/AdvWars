@@ -19,8 +19,8 @@ public class Tank extends  Ground{
     }
 
     public static void main(String[] args) {
-        Fighterplain soldier1 = new Fighterplain();
-        System.out.println("Soldier damage: " + soldier1.getDamage() + " Soldier health: " +soldier1.getHealth()); // Output: Soldier damage: 4
+        Tank tank1 = new Tank();
+        System.out.println("Soldier damage: " + tank1.getDamage() + " Soldier health: " +tank1.getHealth()); // Output: Soldier damage: 4
 
 
 }

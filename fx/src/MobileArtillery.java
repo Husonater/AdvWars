@@ -19,8 +19,8 @@ public class MobileArtillery extends  Ground{
     }
 
     public static void main(String[] args) {
-        Fighterplain soldier1 = new Fighterplain();
-        System.out.println("Soldier damage: " + soldier1.getDamage() + " Soldier health: " +soldier1.getHealth()); // Output: Soldier damage: 4
+        MobileArtillery mobileArtillery1 = new MobileArtillery();
+        System.out.println("Soldier damage: " + mobileArtillery1.getDamage() + " Soldier health: " +mobileArtillery1.getHealth()); // Output: Soldier damage: 4
 
 
 }

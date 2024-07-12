@@ -19,8 +19,8 @@ public class AntiAir extends  Ground{
     }
 
     public static void main(String[] args) {
-        Fighterplain soldier1 = new Fighterplain();
-        System.out.println("Soldier damage: " + soldier1.getDamage() + " Soldier health: " +soldier1.getHealth()); // Output: Soldier damage: 4
+        AntiAir antiAir1 = new AntiAir();
+        System.out.println("Soldier damage: " + antiAir1.getDamage() + " Soldier health: " +antiAir1.getHealth()); // Output: Soldier damage: 4
 
 
 }
