@@ -1,6 +1,6 @@
 public class Input{
 
-String input ;
+static String input ;
 
     public static void main(String[] args) {
     
