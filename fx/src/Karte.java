@@ -317,4 +317,5 @@ public class Karte extends Application {
             System.out.println("Invalid grid position: (" + gridX + ", " + gridY + ")");
         }
     }
+    
 }
