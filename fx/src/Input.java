@@ -6,7 +6,7 @@ public class Input{
         //dauer Abfrage ob ein Key gedrueckt wird
       while (true) {
 
-   
+        
 
 
 

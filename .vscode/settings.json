@@ -8,6 +8,14 @@
         "c:\\javaprj\\SDK\\javafx-sdk-23\\lib\\javafx.media.jar",
         "c:\\javaprj\\SDK\\javafx-sdk-23\\lib\\javafx.swing.jar",
         "c:\\javaprj\\SDK\\javafx-sdk-23\\lib\\javafx.web.jar",
-        "c:\\javaprj\\SDK\\javafx-sdk-23\\lib\\javafx-swt.jar"
+        "c:\\javaprj\\SDK\\javafx-sdk-23\\lib\\javafx-swt.jar",
+        "c:\\javaprj\\javafx-sdk-23\\lib\\javafx.base.jar",
+        "c:\\javaprj\\javafx-sdk-23\\lib\\javafx.controls.jar",
+        "c:\\javaprj\\javafx-sdk-23\\lib\\javafx.fxml.jar",
+        "c:\\javaprj\\javafx-sdk-23\\lib\\javafx.graphics.jar",
+        "c:\\javaprj\\javafx-sdk-23\\lib\\javafx.media.jar",
+        "c:\\javaprj\\javafx-sdk-23\\lib\\javafx.swing.jar",
+        "c:\\javaprj\\javafx-sdk-23\\lib\\javafx.web.jar",
+        "c:\\javaprj\\javafx-sdk-23\\lib\\javafx-swt.jar"
     ]
 }
