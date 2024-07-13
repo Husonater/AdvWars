@@ -17,6 +17,9 @@ import javafx.stage.Stage;
 
 public class Karte extends Application {
 
+    int l;
+    int b;
+
     private static final String LITTLE_ISLAND_IMAGE_PATH = "file:resources/images/LittleIsland.png";
     private static final String EON_SPRINGS_IMAGE_PATH = "file:resources/images/EonSprings.png";
     private static final String PISTON_DAM_IMAGE_PATH = "file:resources/images/PistonDam.png";
@@ -47,13 +50,14 @@ public class Karte extends Application {
 
         // Create the main menu with buttons to select the maps
         Button littleIslandButton = new Button("Little Island");
-        littleIslandButton.setOnAction(e -> showMap(primaryStage, LITTLE_ISLAND_IMAGE_PATH, this::initializeTerrainMapForLittleIsland));
+        
+        littleIslandButton.setOnAction(e -> showMap(primaryStage, LITTLE_ISLAND_IMAGE_PATH, this::initializeTerrainMapForLittleIsland, l=10, b=19));
 
         Button eonSpringsButton = new Button("Eon Springs");
-        eonSpringsButton.setOnAction(e -> showMap(primaryStage, EON_SPRINGS_IMAGE_PATH, this::initializeTerrainMapForEonSprings));
+        eonSpringsButton.setOnAction(e -> showMap(primaryStage, EON_SPRINGS_IMAGE_PATH, this::initializeTerrainMapForEonSprings, l=17, b=19));
 
         Button pistonDamButton = new Button("Piston Dam");
-        pistonDamButton.setOnAction(e -> showMap(primaryStage, PISTON_DAM_IMAGE_PATH, this::initializeTerrainMapForPistonDam));
+        pistonDamButton.setOnAction(e -> showMap(primaryStage, PISTON_DAM_IMAGE_PATH, this::initializeTerrainMapForPistonDam, l=19, b=19));
 
         VBox menu = new VBox(10, littleIslandButton, eonSpringsButton, pistonDamButton);
         menu.setAlignment(Pos.CENTER);
@@ -63,7 +67,7 @@ public class Karte extends Application {
         primaryStage.show();
     }
 
-    private void showMap(Stage primaryStage, String imagePath, Runnable initializeTerrainMap) {
+    private void showMap(Stage primaryStage, String imagePath, Runnable initializeTerrainMap, int l, int b) {
         // Load the map image and set its dimensions
         Image mapImage = new Image(imagePath, MAP_WIDTH, MAP_HEIGHT, false, true);
 
@@ -87,12 +91,13 @@ public class Karte extends Application {
             double mouseX = event.getX();
             double mouseY = event.getY();
 
-            int gridX = (int) (mouseX / (MAP_WIDTH / 19)); // 20 is the number of columns
-            int gridY = (int) (mouseY / (MAP_HEIGHT / 10)); // 20 is the number of rows
+            int gridX = (int) (mouseX / (MAP_WIDTH / b)); // 20 is the number of columns
+            int gridY = (int) (mouseY / (MAP_HEIGHT / l)); // 20 is the number of rows
 
             // Display the terrain type behind the clicked grid
             displayTerrainType(gridX, gridY);
         });
+        
 
         // Create a back button to return to the main menu
         Button backButton = new Button("Back");
@@ -151,6 +156,7 @@ public class Karte extends Application {
     */
     // Helper method to initialize terrainMap for Little Island
     private void initializeTerrainMapForLittleIsland() {
+
         terrainMap = new TerrainType[10][19]; // 20x20 grid
         // Example initialization for Little Island
         terrainMap = new TerrainType[][]{
@@ -160,18 +166,18 @@ public class Karte extends Application {
             {TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.LAND, TerrainType.LAND, TerrainType.ROAD, TerrainType.LAND, TerrainType.WATER,},
             {TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.LAND, TerrainType.LAND, TerrainType.ROAD, TerrainType.LAND, TerrainType.WATER,},
             {TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.FOREST, TerrainType.LAND, TerrainType.LAND, TerrainType.ROAD, TerrainType.FOREST, TerrainType.WATER,},
-            {TerrainType.WATER, TerrainType.ROAD, TerrainType.WATER, TerrainType.WATER, TerrainType.LAND, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.WATER, TerrainType.WATER,},
-            {TerrainType.WATER, TerrainType.ROAD, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,},
-            {TerrainType.WATER, TerrainType.ROAD, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,},
-            {TerrainType.WATER, TerrainType.ROAD, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,},
-            {TerrainType.WATER, TerrainType.ROAD, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,},
-            {TerrainType.WATER, TerrainType.ROAD, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,},
-            {TerrainType.WATER, TerrainType.ROAD, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,},
-            {TerrainType.WATER, TerrainType.ROAD, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,},
-            {TerrainType.WATER, TerrainType.ROAD, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,},
-            {TerrainType.WATER, TerrainType.ROAD, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,},
-            {TerrainType.WATER, TerrainType.ROAD, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,},
-            {TerrainType.WATER, TerrainType.ROAD, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,},
+            {TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.LAND, TerrainType.FOREST, TerrainType.FOREST, TerrainType.ROAD, TerrainType.LAND, TerrainType.WATER,},
+            {TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.MOUNTAIN, TerrainType.FOREST, TerrainType.LAND, TerrainType.FOREST, TerrainType.ROAD, TerrainType.WATER, TerrainType.WATER,},
+            {TerrainType.WATER, TerrainType.WATER, TerrainType.LAND, TerrainType.LAND, TerrainType.FOREST, TerrainType.LAND, TerrainType.LAND, TerrainType.ROAD, TerrainType.WATER, TerrainType.WATER,},
+            {TerrainType.WATER, TerrainType.WATER, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.WATER, TerrainType.WATER,},
+            {TerrainType.WATER, TerrainType.WATER, TerrainType.ROAD, TerrainType.LAND, TerrainType.LAND, TerrainType.FOREST, TerrainType.LAND, TerrainType.LAND, TerrainType.WATER, TerrainType.WATER,},
+            {TerrainType.WATER, TerrainType.WATER, TerrainType.ROAD, TerrainType.FOREST, TerrainType.LAND, TerrainType.FOREST, TerrainType.MOUNTAIN, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,},
+            {TerrainType.WATER, TerrainType.LAND, TerrainType.ROAD, TerrainType.LAND, TerrainType.LAND, TerrainType.FOREST, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,},
+            {TerrainType.WATER, TerrainType.FOREST, TerrainType.ROAD, TerrainType.LAND, TerrainType.FOREST, TerrainType.LAND, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,},
+            {TerrainType.WATER, TerrainType.LAND, TerrainType.ROAD, TerrainType.LAND, TerrainType.LAND, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,},
+            {TerrainType.WATER, TerrainType.LAND, TerrainType.ROAD, TerrainType.LAND, TerrainType.FOREST, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,},
+            {TerrainType.WATER, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,},
+            {TerrainType.WATER, TerrainType.FOREST, TerrainType.LAND, TerrainType.LAND, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,},
             {TerrainType.WATER, TerrainType.ROAD, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,},
 
         };
@@ -179,37 +185,50 @@ public class Karte extends Application {
 
     // Helper method to initialize terrainMap for Eon Springs
     private void initializeTerrainMapForEonSprings() {
-        terrainMap = new TerrainType[15][15]; // 15x15 grid
+
+
+        terrainMap = new TerrainType[19][17]; // 15x15 grid
         // Example initialization for Eon Springs
         terrainMap = new TerrainType[][]{
-            {TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND,
-             TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND},
-            {TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND,
-             TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND},
-            {TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND,
-             TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND},
-            {TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND,
-             TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND},
-            {TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND,
-             TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND},
-            {TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND,
-             TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND},
-            {TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,
-             TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER},
-            {TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,
-             TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER},
-            {TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,
-             TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER},
-            {TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,
-             TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER},
-            {TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST,
-             TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST},
-            {TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST,
-             TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST},
-            {TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST,
-             TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST},
-            {TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST,
-             TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST}
+            {TerrainType.FOREST, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.WATER, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND,
+             TerrainType.LAND, TerrainType.LAND, TerrainType.MOUNTAIN, TerrainType.LAND, TerrainType.LAND,TerrainType.FOREST, TerrainType.FOREST},
+            {TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.ROAD, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.MOUNTAIN,
+             TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.FOREST, TerrainType.LAND,TerrainType.LAND, TerrainType.LAND},
+            {TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.FOREST, TerrainType.WATER, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.ROAD, TerrainType.ROAD,
+             TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD,TerrainType.ROAD, TerrainType.ROAD},
+            {TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.WATER, TerrainType.WATER, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.ROAD, TerrainType.LAND,
+             TerrainType.LAND, TerrainType.FOREST, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND,TerrainType.LAND, TerrainType.ROAD},
+            {TerrainType.FOREST, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.FOREST, TerrainType.FOREST, TerrainType.LAND, TerrainType.ROAD, TerrainType.FOREST,
+             TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.FOREST, TerrainType.LAND,TerrainType.LAND, TerrainType.ROAD},
+            {TerrainType.ROAD, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.ROAD, TerrainType.FOREST,
+             TerrainType.FOREST, TerrainType.FOREST, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND,TerrainType.LAND, TerrainType.ROAD},
+            {TerrainType.ROAD, TerrainType.MOUNTAIN, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.ROAD, TerrainType.ROAD, TerrainType.WATER,
+             TerrainType.WATER, TerrainType.WATER, TerrainType.MOUNTAIN, TerrainType.LAND, TerrainType.FOREST,TerrainType.FOREST, TerrainType.ROAD},
+            {TerrainType.ROAD, TerrainType.FOREST, TerrainType.FOREST, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.ROAD, TerrainType.ROAD, TerrainType.WATER, TerrainType.WATER,
+             TerrainType.WATER, TerrainType.WATER, TerrainType.FOREST, TerrainType.LAND, TerrainType.LAND,TerrainType.FOREST, TerrainType.ROAD},
+            {TerrainType.ROAD, TerrainType.LAND, TerrainType.LAND, TerrainType.FOREST, TerrainType.WATER, TerrainType.WATER, TerrainType.LAND, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,
+             TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.LAND, TerrainType.LAND,TerrainType.LAND, TerrainType.ROAD},
+            {TerrainType.ROAD, TerrainType.LAND, TerrainType.LAND, TerrainType.FOREST, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,
+             TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.FOREST, TerrainType.LAND,TerrainType.LAND, TerrainType.ROAD},
+            {TerrainType.ROAD, TerrainType.LAND, TerrainType.LAND, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,
+             TerrainType.LAND, TerrainType.WATER, TerrainType.WATER, TerrainType.LAND, TerrainType.FOREST,TerrainType.LAND, TerrainType.ROAD},
+            {TerrainType.ROAD, TerrainType.LAND, TerrainType.LAND, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.ROAD,
+             TerrainType.ROAD, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.LAND,TerrainType.LAND, TerrainType.ROAD},
+            {TerrainType.ROAD, TerrainType.LAND, TerrainType.FOREST, TerrainType.LAND, TerrainType.MOUNTAIN, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.ROAD, TerrainType.ROAD,
+             TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,TerrainType.FOREST, TerrainType.ROAD},
+            {TerrainType.ROAD, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.ROAD, TerrainType.WATER,
+             TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,TerrainType.WATER, TerrainType.ROAD},
+            {TerrainType.ROAD, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.ROAD, TerrainType.FOREST,
+             TerrainType.FOREST, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,TerrainType.WATER, TerrainType.FOREST},
+            {TerrainType.ROAD, TerrainType.LAND, TerrainType.LAND, TerrainType.FOREST, TerrainType.LAND, TerrainType.FOREST, TerrainType.LAND, TerrainType.FOREST, TerrainType.ROAD, TerrainType.LAND,
+             TerrainType.LAND, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,TerrainType.LAND, TerrainType.LAND},
+            {TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.LAND,
+             TerrainType.LAND, TerrainType.LAND, TerrainType.WATER, TerrainType.LAND, TerrainType.FOREST,TerrainType.LAND, TerrainType.LAND},
+            {TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.MOUNTAIN, TerrainType.FOREST, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND,
+             TerrainType.LAND, TerrainType.LAND, TerrainType.ROAD, TerrainType.LAND, TerrainType.LAND,TerrainType.LAND, TerrainType.LAND},
+            {TerrainType.FOREST, TerrainType.LAND, TerrainType.FOREST, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.FOREST, TerrainType.LAND,
+             TerrainType.LAND, TerrainType.MOUNTAIN, TerrainType.WATER, TerrainType.LAND, TerrainType.LAND,TerrainType.LAND, TerrainType.FOREST},
+              
         };
     }
 
