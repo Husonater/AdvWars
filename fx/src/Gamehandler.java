@@ -3,9 +3,22 @@
 public class Gamehandler {
 
     int kartenwahl;
+
     
+    public int Fight(Troops attackingunit, Troops defenseunit){
+        int newHealth = defenseunit.getHealth() - attackingunit.getUnitDamage();
+        defenseunit.setHealth(newHealth);
+        if (newHealth > 0){
+            return newHealth;
+        }else{ 
+            defenseunit = null;
+            return 0;
+        }
+    }
 
     public void main(String[] args) {
+        Fighterplain soldier1 = new Fighterplain();
+        System.out.println(Fight(soldier1, soldier1));
         get_Kartenwahl();
     }
 

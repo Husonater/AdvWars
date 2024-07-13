@@ -11,7 +11,7 @@ public class Soldier extends  Ground{
         //moverange fehlt noch
     }
 
-    public int getDamage() {
+    public int getUnitDamage() {
         return damage;
     }
 

@@ -39,7 +39,6 @@ public abstract class Troops {
             }
         }
         public static void main(String[] args) {
-            Soldier soldier = new Soldier();
             Fighterplain fighterplain= new Fighterplain();
             System.out.println(checkCharacteristic(fighterplain, "sea")); // Test the method, should print true and "Characteristic is Forest"
             
@@ -68,7 +67,17 @@ public abstract class Troops {
     public String[] getCharacticis() {
         return characteristic;
     }
-
+    public int getUnitDamage() {
+        return damage;
+    }
+    public int getHealth() {
+        return health;
+    }
+    public void setHealth(int health) {
+        this.health = health;
+    }
+    
+    
     
 
 
