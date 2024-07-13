@@ -1,17 +1,16 @@
 public class Soldier extends  Ground{
     
-    int kartenwahl;
+
     
     //Konstruktor um ein Objekt zu erzeugen, fuer dumme: das macht Soldat 1 und 2 usw.
     public Soldier(){
         this.damage = 4; // Initialize damage to 4
         this.health = 10;
-        this.l = 2;
-        this.b = 4;
+        this.l = 1;
+        this.b = 8;
 
         //moverange fehlt noch
     }
-
 
     public int getUnitDamage() {
         return damage;
@@ -29,6 +28,4 @@ public class Soldier extends  Ground{
 
 
 }
-
-    
 }
