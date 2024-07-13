@@ -2,6 +2,8 @@
 public abstract class Troops {
 
     // Anfang Attribute
+    int l;
+    int b;
     int moverange;
     int damage;
     int health;
