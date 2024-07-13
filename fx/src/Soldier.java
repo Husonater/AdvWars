@@ -6,7 +6,8 @@ public class Soldier extends  Ground{
     public Soldier(){
         this.damage = 4; // Initialize damage to 4
         this.health = 10;
-        
+        this.l = 1;
+        this.b = 8;
 
         //moverange fehlt noch
     }

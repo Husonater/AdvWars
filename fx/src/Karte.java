@@ -63,7 +63,7 @@ public class Karte extends Application {
         eonSpringsButton.setOnAction(e -> showMap(primaryStage, EON_SPRINGS_IMAGE_PATH, () -> loadMap(Maps.EonSprings), l=17, b=19));
 
         Button pistonDamButton = new Button("Piston Dam");
-        pistonDamButton.setOnAction(e -> showMap(primaryStage, PISTON_DAM_IMAGE_PATH, () -> loadMap(Maps.PistonDam), l=19, b=19));
+        pistonDamButton.setOnAction(e -> showMap(primaryStage, PISTON_DAM_IMAGE_PATH, this::initializeTerrainMapForPistonDam, l=14, b=26));
 
         VBox menu = new VBox(10, littleIslandButton, eonSpringsButton, pistonDamButton);
         menu.setAlignment(Pos.CENTER);
@@ -79,6 +79,7 @@ public class Karte extends Application {
 
         // Initialize terrainMap with example data (for demonstration)
         initializeTerrainMap.run();
+        
 
         // Create ImageView with the map image
         mapView = new ImageView(mapImage);
@@ -176,7 +177,7 @@ public class Karte extends Application {
             e.printStackTrace();
         }
 
-    }
+
 
     // Method to center the stage on the screen
     private void centerStage(Stage stage, double windowWidth, double windowHeight) {
@@ -202,4 +203,5 @@ public class Karte extends Application {
             System.out.println("Invalid grid position: (" + gridX + ", " + gridY + ")");
         }
     }
+    
 }

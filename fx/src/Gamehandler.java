@@ -25,5 +25,4 @@ public class Gamehandler {
     public int get_Kartenwahl(){
         return kartenwahl;
     }
-
 }
