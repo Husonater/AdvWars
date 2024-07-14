@@ -4,6 +4,9 @@ public class Gamehandler {
 
     int kartenwahl;
 
+    public static void main(String[] args) {
+        
+    }
     
     public int Fight(Troops attackingunit, Troops defenseunit){
         int newHealth = defenseunit.getHealth() - attackingunit.getUnitDamage();
@@ -14,12 +17,6 @@ public class Gamehandler {
             defenseunit = null;
             return 0;
         }
-    }
-
-    public void main(String[] args) {
-        Fighterplain soldier1 = new Fighterplain();
-        System.out.println(Fight(soldier1, soldier1));
-        get_Kartenwahl();
     }
 
     public int get_Kartenwahl(){
