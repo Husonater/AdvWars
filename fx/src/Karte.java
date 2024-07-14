@@ -149,15 +149,15 @@ public class Karte extends Application {
             switch (chosenMap){
                 case EonSprings:
                     mapFile = "resources/files/EonSprings.csv";
-                    terrainMap = new TerrainType[19][17];
+                    terrainMap = new TerrainType[b][l];
                     break;
                 case LittleIsland:
                     mapFile = "resources/files/LittleIsland.csv";
-                    terrainMap = new TerrainType[19][10];
+                    terrainMap = new TerrainType[b][l];
                     break;
                 case PistonDam:
                     mapFile = "resources/files/PistonDam.csv";
-                    terrainMap = new TerrainType[26][14];
+                    terrainMap = new TerrainType[b][l];
                     break;
                 default:
                     System.out.println("Map nicht vorhanden");
