@@ -51,6 +51,7 @@ public class Karte extends Application {
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Advance Wars: Little Island");
+
         // Create the main menu with buttons to select the maps
         Button littleIslandButton = new Button("Little Island");
         
@@ -61,6 +62,10 @@ public class Karte extends Application {
 
         Button pistonDamButton = new Button("Piston Dam");
         pistonDamButton.setOnAction(e -> showMap(primaryStage, PISTON_DAM_IMAGE_PATH, () -> loadMap(Maps.PistonDam), l=14, b=26));
+
+
+
+
 
         VBox menu = new VBox(10, littleIslandButton, eonSpringsButton, pistonDamButton);
         menu.setAlignment(Pos.CENTER);
