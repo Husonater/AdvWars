@@ -207,7 +207,7 @@ public class Karte extends Application {
     Troops[] team1 = GUI.createTeam1();
     for (Troops troop : team1) {
         if (gridX == troop.x && gridY == troop.y) {
-            System.out.println("iloveniggers");
+            System.out.println("3");
             return true;
         }
     }
