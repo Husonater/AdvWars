@@ -2,8 +2,7 @@
 public class GUI {
     public static void main(String[] args) {
         Karte.main(args);
-        createTeam1();
-        createTeam2();
+        
 
     }
 
