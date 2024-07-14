@@ -46,7 +46,6 @@ public class Karte extends Application {
     }
 
     public static void main(String[] args) {
-        createTeam1();
         launch(args); // Launch the JavaFX application
         
     }
@@ -210,7 +209,7 @@ public class Karte extends Application {
     Troops[] team1 = GUI.createTeam1();
     for (Troops troop : team1) {
         if (gridX == troop.x && gridY == troop.y) {
-            System.out.println("");
+            System.out.println("troop here");
             return true;
         }
     }

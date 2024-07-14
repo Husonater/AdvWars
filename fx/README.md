@@ -1,18 +1,16 @@
-## Getting Started
+Dies ist die Projektarbeit von Jonas Thiel, Nico Nasuti, Lars Zeppenfeld, Vincent Radelj
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+Die Aufgabe war eine JavaFX Anwendung zu erstellen, die wie das Spiel Advance-Wars funktioniert.
+->https://github.com/appenmaier/java_ti23/blob/main/description.md
 
-## Folder Structure
+Die Karten erstellung funktioniert ueber die Datei Karte.java, die einzelnen Schritte zum erstellen sind kommentiert.
+Die Terrains sind definiert und mit Maus Click auf die Karte werden sie mit Koordinaten in dem Terminal ausgegeben 
 
-The workspace contains two folders by default, where:
+Die Klass Troops ist die Superklasse von Air und Ground. Ground ist die Superklasse von allen Bodeneinheiten.
+Air ist die Superklasse von allen Lufteinheiten.
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+Fehlende Funktionen sind das Platzieren der Truppen und das bewegen der Truppen.
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
-
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
-
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+Idee von uns war es mithilfe dem erstellten  Grid/Array in der Klasse Karte die position mit einer getMethode abzurufen
+und somit zu ermitteln ob eine Truppe auf dem Feld steht und wenn ja diese dan bewegen zu koenne.
+-> Problem wir haben die Methode fuer das bestaetigen eines besetzten Feldes nicht umseten koenne, da JavaFX sehr unhandlich ist.

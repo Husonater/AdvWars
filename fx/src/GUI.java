@@ -2,11 +2,13 @@
 public class GUI {
     public static void main(String[] args) {
         Karte.main(args);
+        createTeam1();
+        createTeam2();
         
 
     }
 
-
+    //Team von Objekten in ein Array
     public static Troops[] createTeam1(){
         Troops[] team1 = new Troops[8];
 
