@@ -2,6 +2,10 @@
 
 //java --module-path C:\javaprj\javafx-sdk-23\lib --add-modules javafx.controls,javafx.fxml -cp bin  C:\javaprj\AdvWar\fx\src\Karte.java 
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -14,13 +18,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Karte extends Application {
 
@@ -35,7 +32,6 @@ public class Karte extends Application {
     private static final double MAP_HEIGHT = 600; // Desired height of the map image
 
     private TerrainType[][] terrainMap; // Terrain information for each cell
-    private ObjectType[][] objectMap;
     private ImageView mapView; // Declare mapView as a class attribute
     private StackPane stackPane; // Declare stackPane as a class attribute
 
@@ -48,22 +44,9 @@ public class Karte extends Application {
         MOUNTAIN
     }
 
-    public enum ObjectType {
-        NONE, // No object
-        INFANTRY,
-        MECHANIZED_INFANTRY,
-        TANK,
-        MOBILE_ARTILLERY,
-        ANTI_AIR,
-        FIGHTER,
-        BOMBER,
-        BATTLE_COPTER
-    }
-    
     public static void main(String[] args) {
         launch(args); // Launch the JavaFX application
     }
-
 
     @Override
     public void start(Stage primaryStage) {
@@ -87,21 +70,12 @@ public class Karte extends Application {
         primaryStage.show();
     }
 
-    public void showMap(Stage primaryStage, String imagePath, Runnable initializeTerrainMap, int l, int b) {
-        
-    
-
+    private void showMap(Stage primaryStage, String imagePath, Runnable initializeTerrainMap, int l, int b) {
+        // Load the map image and set its dimensions
         Image mapImage = new Image(imagePath, MAP_WIDTH, MAP_HEIGHT, false, true);
 
         // Initialize terrainMap with example data (for demonstration)
         initializeTerrainMap.run();
-        objectMap = new ObjectType[b][l];
-        for (int i = 0; i < b; i++) {
-            for (int j = 0; j < l; j++) {
-                objectMap[i][j] = ObjectType.NONE;
-            }
-        }
-
 
         // Create ImageView with the map image
         mapView = new ImageView(mapImage);
@@ -121,12 +95,10 @@ public class Karte extends Application {
             double mouseY = event.getY();
 
             int gridX = (int) (mouseX / (MAP_WIDTH / b)); // 20 is the number of columns
-            int gridY = (int) (mouseY / (MAP_HEIGHT / l)); // 20 is the number of b
+            int gridY = (int) (mouseY / (MAP_HEIGHT / l)); // 20 is the number of rows
 
             // Display the terrain type behind the clicked grid
             displayTerrainType(gridX, gridY);
-
-
         });
         
 
@@ -159,7 +131,6 @@ public class Karte extends Application {
         primaryStage.show();
     }
 
-
     enum Maps{
         EonSprings,
         LittleIsland,
@@ -181,7 +152,7 @@ public class Karte extends Application {
                     break;
                 case PistonDam:
                     mapFile = "resources/files/PistonDam.csv";
-                    terrainMap = new TerrainType[14][26];
+                    terrainMap = new TerrainType[26][14];
                     break;
                 default:
                     System.out.println("Map nicht vorhanden");
@@ -202,7 +173,7 @@ public class Karte extends Application {
             e.printStackTrace();
         }
 
-
+    }
 
     // Method to center the stage on the screen
     private void centerStage(Stage stage, double windowWidth, double windowHeight) {
@@ -222,13 +193,10 @@ public class Karte extends Application {
     private void displayTerrainType(int gridX, int gridY) {
         if (terrainMap != null && gridX >= 0 && gridX < terrainMap.length && gridY >= 0 && gridY < terrainMap[0].length) {
             TerrainType terrainType = terrainMap[gridX][gridY];
-            ObjectType objectType = objectMap[gridX][gridY];
-            System.out.println("Terrain type at grid position (" + gridX + ", " + gridY + "): " + terrainType + ", Object type: " + objectType);
+            System.out.println("Terrain type at grid position (" + gridX + ", " + gridY + "): " + terrainType);
+            // You can add further logic here to visually display the terrain type if needed
         } else {
             System.out.println("Invalid grid position: (" + gridX + ", " + gridY + ")");
         }
     }
 }
-
-
-
