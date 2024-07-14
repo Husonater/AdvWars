@@ -18,9 +18,10 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+  // Replace 'package.to' with the actual package path of GUI class
 
 public class Karte extends Application {
-
+    
     int l;
     int b;
 
@@ -45,7 +46,7 @@ public class Karte extends Application {
     }
 
     public static void main(String[] args) {
-        GUI.createTeam1();
+        createTeam1();
         launch(args); // Launch the JavaFX application
         
     }
@@ -202,17 +203,22 @@ public class Karte extends Application {
             System.out.println("Invalid grid position: (" + gridX + ", " + gridY + ")");
         }
     }
+
     
+    //Diese Funktion sollte eigentlich überprüfen ob beim Input des mauszeigers eine Einheit steht
     /*private boolean displayMove(int gridX, int gridY) {
     Troops[] team1 = GUI.createTeam1();
     for (Troops troop : team1) {
         if (gridX == troop.x && gridY == troop.y) {
-            System.out.println("");
+            
             return true;
         }
     }
     return false;
 }*/
+
+
+
 
     
 }
