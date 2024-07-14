@@ -4,9 +4,10 @@ public class Tank extends  Ground{
 
     
     //Konstruktor um ein Objekt zu erzeugen, fuer dumme: das macht Soldat 1 und 2 usw.
-    public Tank(){
-        this.damage = 4; // Initialize damage to 4
-        this.health = 10;
+    public Tank(int l, int b){
+        this.damage = 6; // Initialize damage to 4
+        this.health = 15;
+        this.moverange = 3;
         //moverange fehlt noch
     }
 
@@ -17,11 +18,5 @@ public class Tank extends  Ground{
     public int getHealth() {
         return health;
     }
-
-    public static void main(String[] args) {
-        Tank tank1 = new Tank();
-        System.out.println("Soldier damage: " + tank1.getDamage() + " Soldier health: " +tank1.getHealth()); // Output: Soldier damage: 4
-
-
-}
+    
 }

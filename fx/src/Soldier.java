@@ -3,11 +3,10 @@ public class Soldier extends  Ground{
 
     
     //Konstruktor um ein Objekt zu erzeugen, fuer dumme: das macht Soldat 1 und 2 usw.
-    public Soldier(){
+    public Soldier(int l , int b){
         this.damage = 4; // Initialize damage to 4
         this.health = 10;
-        this.l = 1;
-        this.b = 8;
+        this.moverange = 4;
 
         //moverange fehlt noch
     }

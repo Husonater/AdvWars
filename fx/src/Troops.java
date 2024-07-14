@@ -42,11 +42,6 @@ public abstract class Troops {
                 return false;
             }
         }
-        public static void main(String[] args) {
-            Fighterplain fighterplain= new Fighterplain();
-            System.out.println(checkCharacteristic(fighterplain, "sea")); // Test the method, should print true and "Characteristic is Forest"
-            
-        }
     }
 
 

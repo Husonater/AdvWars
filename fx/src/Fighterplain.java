@@ -3,9 +3,10 @@ public class Fighterplain extends  Air{
 
 
     //Konstruktor um ein Objekt zu erzeugen, fuer dumme: das macht Soldat 1 und 2 usw.
-    public Fighterplain(){
+    public Fighterplain(int l, int b){
         this.damage = 6; // Initialize damage to 4
-        this.health = 10;
+        this.health = 12;
+        this.moverange = 7;
         
     }
 
@@ -20,10 +21,4 @@ public class Fighterplain extends  Air{
         return characteristic;
     }
 
-    public static void main(String[] args) {
-        Fighterplain fighterplain1 = new Fighterplain();
-        System.out.println("Soldier damage: " + fighterplain1.getDamage() + " Soldier health: " +fighterplain1.getHealth()); // Output: Soldier damage: 4
-
-
-}
 }

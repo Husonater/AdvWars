@@ -11,7 +11,7 @@ public class GUI {
     public static Troops[] createTeam1(){
         Troops team1[] = new Troops[7];
 
-        team1[0] = new Soldier();
+        team1[0] = new Soldier(2,8);
         team1[1] = new Fighterplain();
         team1[2] = new MechanizedInfantry();
         team1[3] = new MobileArtillery();

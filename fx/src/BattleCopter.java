@@ -3,9 +3,10 @@ public class BattleCopter extends  Air{
 
 
     //Konstruktor um ein Objekt zu erzeugen, fuer dumme: das macht Soldat 1 und 2 usw.
-    public BattleCopter(){
-        this.damage = 6; // Initialize damage to 4
-        this.health = 10;
+    public BattleCopter(int l, int b){
+        this.damage = 8; // Initialize damage to 4
+        this.health = 7;
+        this.moverange = 8;
     }
 
     public int getDamage() {
@@ -16,10 +17,4 @@ public class BattleCopter extends  Air{
         return health;
     }
 
-    public static void main(String[] args) {
-        BattleCopter battleCopter1 = new BattleCopter();
-        System.out.println("Soldier damage: " + battleCopter1.getDamage() + " Soldier health: " +battleCopter1.getHealth()); // Output: Soldier damage: 4
-
-
-}
 }

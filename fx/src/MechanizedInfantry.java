@@ -4,9 +4,10 @@ public class MechanizedInfantry extends  Ground{
 
     
     //Konstruktor um ein Objekt zu erzeugen, fuer dumme: das macht Soldat 1 und 2 usw.
-    public MechanizedInfantry(){
-        this.damage = 4; // Initialize damage to 4
-        this.health = 10;
+    public MechanizedInfantry(int l, int b){
+        this.damage = 5; // Initialize damage to 4
+        this.health = 12;
+        this.moverange = 5;
         //moverange fehlt noch
     }
 
@@ -18,10 +19,7 @@ public class MechanizedInfantry extends  Ground{
         return health;
     }
 
-    public static void main(String[] args) {
-        MechanizedInfantry mechanizedInfantry1 = new MechanizedInfantry();
-        System.out.println("Soldier damage: " + mechanizedInfantry1.getDamage() + " Soldier health: " +mechanizedInfantry1.getHealth()); // Output: Soldier damage: 4
 
 
-}
+
 }
