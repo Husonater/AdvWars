@@ -8,6 +8,8 @@ public class AntiAir extends  Ground{
         this.damage = 6; // Initialize damage to 4
         this.health = 10;
         this.moverange =5;
+        this.x =l;
+        this.y =b;
         
         //moverange fehlt noch
     }

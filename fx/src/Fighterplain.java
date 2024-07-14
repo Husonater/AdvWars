@@ -7,6 +7,8 @@ public class Fighterplain extends  Air{
         this.damage = 6; // Initialize damage to 4
         this.health = 12;
         this.moverange = 7;
+        this.x =l;
+        this.y =b;
         
     }
 

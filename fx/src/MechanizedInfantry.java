@@ -8,6 +8,8 @@ public class MechanizedInfantry extends  Ground{
         this.damage = 5; // Initialize damage to 4
         this.health = 12;
         this.moverange = 5;
+        this.x =l;
+        this.y =b;
         //moverange fehlt noch
     }
 

@@ -8,6 +8,8 @@ public class Tank extends  Ground{
         this.damage = 6; // Initialize damage to 4
         this.health = 15;
         this.moverange = 3;
+        this.x =l;
+        this.y =b;
         //moverange fehlt noch
     }
 

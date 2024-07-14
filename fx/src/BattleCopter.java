@@ -7,6 +7,8 @@ public class BattleCopter extends  Air{
         this.damage = 8; // Initialize damage to 4
         this.health = 7;
         this.moverange = 8;
+        this.x =l;
+        this.y =b;
     }
 
     public int getDamage() {
