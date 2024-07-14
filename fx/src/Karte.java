@@ -52,21 +52,11 @@ public class Karte extends Application {
         BOMBER,
         BATTLE_COPTER
     }
-    public class MapObject {
-        int x;
-        int y;
-        ObjectType type;
-
-        public MapObject(int x, int y, ObjectType type) {
-            this.x = x;
-            this.y = y;
-            this.type = type;
-        }
-    }
-
+    
     public static void main(String[] args) {
         launch(args); // Launch the JavaFX application
     }
+
 
     @Override
     public void start(Stage primaryStage) {
@@ -99,13 +89,13 @@ public class Karte extends Application {
 
         // Initialize terrainMap with example data (for demonstration)
         initializeTerrainMap.run();
-        objectMap = new ObjectType[l][b];
-        for (int i = 0; i < l; i++) {
-            for (int j = 0; j < b; j++) {
+        objectMap = new ObjectType[b][l];
+        for (int i = 0; i < b; i++) {
+            for (int j = 0; j < l; j++) {
                 objectMap[i][j] = ObjectType.NONE;
             }
         }
-        
+
 
         // Create ImageView with the map image
         mapView = new ImageView(mapImage);
@@ -326,46 +316,7 @@ public class Karte extends Application {
             System.out.println("Invalid grid position: (" + gridX + ", " + gridY + ")");
         }
     }
-
-    private void placeObject(int gridX, int gridY, ObjectType objectType) {
-        if (objectMap != null && gridX >= 0 && gridX < objectMap.length && gridY >= 0 && gridY < objectMap[0].length) {
-            objectMap[gridX][gridY] = objectType;
-            System.out.println("Placed " + objectType + " at grid position (" + gridX + ", " + gridY + ")");
-        } else {
-            System.out.println("Invalid grid position: (" + gridX + ", " + gridY + ")");
-        }
-    }
-        public static class Position {
-            public int row;
-            public int col;
-
-            public Position(int row, int col) {
-                this.row = row;
-                this.col = col;
-            }
-        }
 }
 
 
 
-
-/*
-   GridPane gridPane = new GridPane();
-        gridPane.setPadding(new Insets(10));
-        gridPane.setVgap(1);
-        gridPane.setHgap(1);
-        gridPane.setAlignment(Pos.CENTER);
-
-// Add mapView to the GridPane
-        gridPane.add(mapView, 0, 0, l, b);
-
-        // Create terrain type labels and add them to the GridPane
-        for (int row = 0; row < b; row++) {
-            for (int col = 0; col < l; col++) {
-                TerrainType terrainType = terrainMap[row][col];
-                Button terrainButton = new Button(terrainType.toString());
-                terrainButton.setMinSize(MAP_WIDTH / l, MAP_HEIGHT / b);
-                gridPane.add(terrainButton, col, row);
-            }
-        }
- */
