@@ -35,6 +35,7 @@ public class Karte extends Application {
     private static final double MAP_HEIGHT = 600; // Desired height of the map image
 
     private TerrainType[][] terrainMap; // Terrain information for each cell
+    private ObjectType[][] objectMap;
     private ImageView mapView; // Declare mapView as a class attribute
     private StackPane stackPane; // Declare stackPane as a class attribute
 
@@ -47,9 +48,22 @@ public class Karte extends Application {
         MOUNTAIN
     }
 
+    public enum ObjectType {
+        NONE, // No object
+        INFANTRY,
+        MECHANIZED_INFANTRY,
+        TANK,
+        MOBILE_ARTILLERY,
+        ANTI_AIR,
+        FIGHTER,
+        BOMBER,
+        BATTLE_COPTER
+    }
+    
     public static void main(String[] args) {
         launch(args); // Launch the JavaFX application
     }
+
 
     @Override
     public void start(Stage primaryStage) {
@@ -63,7 +77,7 @@ public class Karte extends Application {
         eonSpringsButton.setOnAction(e -> showMap(primaryStage, EON_SPRINGS_IMAGE_PATH, () -> loadMap(Maps.EonSprings), l=17, b=19));
 
         Button pistonDamButton = new Button("Piston Dam");
-        pistonDamButton.setOnAction(e -> showMap(primaryStage, PISTON_DAM_IMAGE_PATH, this::initializeTerrainMapForPistonDam, l=14, b=26));
+        pistonDamButton.setOnAction(e -> showMap(primaryStage, PISTON_DAM_IMAGE_PATH, () -> loadMap(Maps.PistonDam), l=14, b=26));
 
         VBox menu = new VBox(10, littleIslandButton, eonSpringsButton, pistonDamButton);
         menu.setAlignment(Pos.CENTER);
@@ -73,13 +87,21 @@ public class Karte extends Application {
         primaryStage.show();
     }
 
-    private void showMap(Stage primaryStage, String imagePath, Runnable initializeTerrainMap, int l, int b) {
-        // Load the map image and set its dimensions
+    public void showMap(Stage primaryStage, String imagePath, Runnable initializeTerrainMap, int l, int b) {
+        
+    
+
         Image mapImage = new Image(imagePath, MAP_WIDTH, MAP_HEIGHT, false, true);
 
         // Initialize terrainMap with example data (for demonstration)
         initializeTerrainMap.run();
-        
+        objectMap = new ObjectType[b][l];
+        for (int i = 0; i < b; i++) {
+            for (int j = 0; j < l; j++) {
+                objectMap[i][j] = ObjectType.NONE;
+            }
+        }
+
 
         // Create ImageView with the map image
         mapView = new ImageView(mapImage);
@@ -99,10 +121,12 @@ public class Karte extends Application {
             double mouseY = event.getY();
 
             int gridX = (int) (mouseX / (MAP_WIDTH / b)); // 20 is the number of columns
-            int gridY = (int) (mouseY / (MAP_HEIGHT / l)); // 20 is the number of rows
+            int gridY = (int) (mouseY / (MAP_HEIGHT / l)); // 20 is the number of b
 
             // Display the terrain type behind the clicked grid
             displayTerrainType(gridX, gridY);
+
+
         });
         
 
@@ -134,6 +158,7 @@ public class Karte extends Application {
         // Show the stage
         primaryStage.show();
     }
+
 
     enum Maps{
         EonSprings,
@@ -197,11 +222,13 @@ public class Karte extends Application {
     private void displayTerrainType(int gridX, int gridY) {
         if (terrainMap != null && gridX >= 0 && gridX < terrainMap.length && gridY >= 0 && gridY < terrainMap[0].length) {
             TerrainType terrainType = terrainMap[gridX][gridY];
-            System.out.println("Terrain type at grid position (" + gridX + ", " + gridY + "): " + terrainType);
-            // You can add further logic here to visually display the terrain type if needed
+            ObjectType objectType = objectMap[gridX][gridY];
+            System.out.println("Terrain type at grid position (" + gridX + ", " + gridY + "): " + terrainType + ", Object type: " + objectType);
         } else {
             System.out.println("Invalid grid position: (" + gridX + ", " + gridY + ")");
         }
     }
-    
 }
+
+
+
