@@ -20,6 +20,9 @@ public class Soldier extends  Ground{
     public int getHealth() {
         return health;
     }
+    public int getx(){
+        return x;
+    }
        
 
 

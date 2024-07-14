@@ -5,7 +5,7 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-
+import GUI.createTeam1;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -45,13 +45,15 @@ public class Karte extends Application {
     }
 
     public static void main(String[] args) {
+        GUI.createTeam1();
         launch(args); // Launch the JavaFX application
+        
     }
 
     @Override
     public void start(Stage primaryStage) {
+        
         primaryStage.setTitle("Advance Wars: Little Island");
-
         // Create the main menu with buttons to select the maps
         Button littleIslandButton = new Button("Little Island");
         
@@ -62,10 +64,6 @@ public class Karte extends Application {
 
         Button pistonDamButton = new Button("Piston Dam");
         pistonDamButton.setOnAction(e -> showMap(primaryStage, PISTON_DAM_IMAGE_PATH, () -> loadMap(Maps.PistonDam), l=14, b=26));
-
-
-
-
 
         VBox menu = new VBox(10, littleIslandButton, eonSpringsButton, pistonDamButton);
         menu.setAlignment(Pos.CENTER);
@@ -101,7 +99,7 @@ public class Karte extends Application {
 
             int gridX = (int) (mouseX / (MAP_WIDTH / b)); // 20 is the number of columns
             int gridY = (int) (mouseY / (MAP_HEIGHT / l)); // 20 is the number of rows
-
+            //displayMove(gridX, gridY);
             // Display the terrain type behind the clicked grid
             displayTerrainType(gridX, gridY);
         });
@@ -149,15 +147,15 @@ public class Karte extends Application {
             switch (chosenMap){
                 case EonSprings:
                     mapFile = "resources/files/EonSprings.csv";
-                    terrainMap = new TerrainType[b][l];
+                    terrainMap = new TerrainType[19][17];
                     break;
                 case LittleIsland:
                     mapFile = "resources/files/LittleIsland.csv";
-                    terrainMap = new TerrainType[b][l];
+                    terrainMap = new TerrainType[19][10];
                     break;
                 case PistonDam:
                     mapFile = "resources/files/PistonDam.csv";
-                    terrainMap = new TerrainType[b][l];
+                    terrainMap = new TerrainType[26][14];
                     break;
                 default:
                     System.out.println("Map nicht vorhanden");
@@ -204,4 +202,17 @@ public class Karte extends Application {
             System.out.println("Invalid grid position: (" + gridX + ", " + gridY + ")");
         }
     }
+    
+    /*private boolean displayMove(int gridX, int gridY) {
+    Troops[] team1 = GUI.createTeam1();
+    for (Troops troop : team1) {
+        if (gridX == troop.x && gridY == troop.y) {
+            System.out.println("iloveniggers");
+            return true;
+        }
+    }
+    return false;
+}*/
+
+    
 }

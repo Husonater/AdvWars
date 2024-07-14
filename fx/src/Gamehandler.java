@@ -23,8 +23,7 @@ public class Gamehandler {
         return kartenwahl;
     }
 
-    public int getX(){
-        return x;
-    }
+    
+    
 
 }
