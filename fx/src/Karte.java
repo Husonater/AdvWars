@@ -28,6 +28,7 @@ public class Karte extends Application {
     private static final double MAP_HEIGHT = 600; // Desired height of the map image
 
     private TerrainType[][] terrainMap; // Terrain information for each cell
+    private ObjectType[][] objectMap;
     private ImageView mapView; // Declare mapView as a class attribute
     private StackPane stackPane; // Declare stackPane as a class attribute
 
@@ -38,6 +39,29 @@ public class Karte extends Application {
         ROAD,
         FOREST,
         MOUNTAIN
+    }
+
+    public enum ObjectType {
+        NONE, // No object
+        INFANTRY,
+        MECHANIZED_INFANTRY,
+        TANK,
+        MOBILE_ARTILLERY,
+        ANTI_AIR,
+        FIGHTER,
+        BOMBER,
+        BATTLE_COPTER
+    }
+    public class MapObject {
+        int x;
+        int y;
+        ObjectType type;
+
+        public MapObject(int x, int y, ObjectType type) {
+            this.x = x;
+            this.y = y;
+            this.type = type;
+        }
     }
 
     public static void main(String[] args) {
@@ -67,12 +91,20 @@ public class Karte extends Application {
         primaryStage.show();
     }
 
-    private void showMap(Stage primaryStage, String imagePath, Runnable initializeTerrainMap, int l, int b) {
-        // Load the map image and set its dimensions
+    public void showMap(Stage primaryStage, String imagePath, Runnable initializeTerrainMap, int l, int b) {
+        
+    
+
         Image mapImage = new Image(imagePath, MAP_WIDTH, MAP_HEIGHT, false, true);
 
         // Initialize terrainMap with example data (for demonstration)
         initializeTerrainMap.run();
+        objectMap = new ObjectType[l][b];
+        for (int i = 0; i < l; i++) {
+            for (int j = 0; j < b; j++) {
+                objectMap[i][j] = ObjectType.NONE;
+            }
+        }
         
 
         // Create ImageView with the map image
@@ -93,10 +125,12 @@ public class Karte extends Application {
             double mouseY = event.getY();
 
             int gridX = (int) (mouseX / (MAP_WIDTH / b)); // 20 is the number of columns
-            int gridY = (int) (mouseY / (MAP_HEIGHT / l)); // 20 is the number of rows
+            int gridY = (int) (mouseY / (MAP_HEIGHT / l)); // 20 is the number of b
 
             // Display the terrain type behind the clicked grid
             displayTerrainType(gridX, gridY);
+
+
         });
         
 
@@ -129,32 +163,7 @@ public class Karte extends Application {
         primaryStage.show();
     }
 
-    // Method to center the stage on the screen
-    /* 
-    private void centerStage(Stage stage, double windowWidth, double windowHeight) {
-        // Get the screen bounds
-        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-
-        // Calculate the centered position for the stage
-        double centerX = screenBounds.getMinX() + (screenBounds.getWidth() - windowWidth) / 2;
-        double centerY = screenBounds.getMinY() + (screenBounds.getHeight() - windowHeight) / 2;
-
-        // Set the stage position
-        stage.setX(centerX);
-        stage.setY(centerY);
-    }
-
-    // Method to display the terrain type at the specified grid coordinates
-    private void displayTerrainType(int gridX, int gridY) {
-        if (terrainMap != null && gridX >= 0 && gridX < terrainMap.length && gridY >= 0 && gridY < terrainMap[0].length) {
-            TerrainType terrainType = terrainMap[gridX][gridY];
-            System.out.println("Terrain type at grid position (" + gridX + ", " + gridY + "): " + terrainType);
-            // You can add further logic here to visually display the terrain type if needed
-        } else {
-            System.out.println("Invalid grid position: (" + gridX + ", " + gridY + ")");
-        }
-    }
-    */
+    
     // Helper method to initialize terrainMap for Little Island
     private void initializeTerrainMapForLittleIsland() {
 
@@ -311,11 +320,52 @@ public class Karte extends Application {
     private void displayTerrainType(int gridX, int gridY) {
         if (terrainMap != null && gridX >= 0 && gridX < terrainMap.length && gridY >= 0 && gridY < terrainMap[0].length) {
             TerrainType terrainType = terrainMap[gridX][gridY];
-            System.out.println("Terrain type at grid position (" + gridX + ", " + gridY + "): " + terrainType);
-            // You can add further logic here to visually display the terrain type if needed
+            ObjectType objectType = objectMap[gridX][gridY];
+            System.out.println("Terrain type at grid position (" + gridX + ", " + gridY + "): " + terrainType + ", Object type: " + objectType);
         } else {
             System.out.println("Invalid grid position: (" + gridX + ", " + gridY + ")");
         }
     }
-    
+
+    private void placeObject(int gridX, int gridY, ObjectType objectType) {
+        if (objectMap != null && gridX >= 0 && gridX < objectMap.length && gridY >= 0 && gridY < objectMap[0].length) {
+            objectMap[gridX][gridY] = objectType;
+            System.out.println("Placed " + objectType + " at grid position (" + gridX + ", " + gridY + ")");
+        } else {
+            System.out.println("Invalid grid position: (" + gridX + ", " + gridY + ")");
+        }
+    }
+        public static class Position {
+            public int row;
+            public int col;
+
+            public Position(int row, int col) {
+                this.row = row;
+                this.col = col;
+            }
+        }
 }
+
+
+
+
+/*
+   GridPane gridPane = new GridPane();
+        gridPane.setPadding(new Insets(10));
+        gridPane.setVgap(1);
+        gridPane.setHgap(1);
+        gridPane.setAlignment(Pos.CENTER);
+
+// Add mapView to the GridPane
+        gridPane.add(mapView, 0, 0, l, b);
+
+        // Create terrain type labels and add them to the GridPane
+        for (int row = 0; row < b; row++) {
+            for (int col = 0; col < l; col++) {
+                TerrainType terrainType = terrainMap[row][col];
+                Button terrainButton = new Button(terrainType.toString());
+                terrainButton.setMinSize(MAP_WIDTH / l, MAP_HEIGHT / b);
+                gridPane.add(terrainButton, col, row);
+            }
+        }
+ */
