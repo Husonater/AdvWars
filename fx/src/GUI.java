@@ -8,7 +8,7 @@ public class GUI {
     }
 
 
-    public static void createTeam1(){
+    public static Troops[] createTeam1(){
         Troops team1[] = new Troops[7];
 
         team1[0] = new Soldier();
@@ -19,9 +19,11 @@ public class GUI {
         team1[5] = new Bomber();
         team1[6] = new BattleCopter();
         team1[7] = new AntiAir();
+
+        return team1;
     }
 
-    public static  void createTeam2(){
+    public static Troops[] createTeam2(){
         Troops team2[] = new Troops[7];
 
         team2[0] = new Soldier();
@@ -32,6 +34,8 @@ public class GUI {
         team2[5] = new Bomber();
         team2[6] = new BattleCopter();
         team2[7] = new AntiAir();
+
+        return team2;
     }
 
 }
