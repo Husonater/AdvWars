@@ -15,6 +15,13 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Karte extends Application {
 
     int l;
@@ -61,17 +68,16 @@ public class Karte extends Application {
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Advance Wars: Little Island");
-
         // Create the main menu with buttons to select the maps
         Button littleIslandButton = new Button("Little Island");
         
-        littleIslandButton.setOnAction(e -> showMap(primaryStage, LITTLE_ISLAND_IMAGE_PATH, this::initializeTerrainMapForLittleIsland, l=10, b=19));
+        littleIslandButton.setOnAction(e -> showMap(primaryStage, LITTLE_ISLAND_IMAGE_PATH, () -> loadMap(Maps.LittleIsland), l=10, b=19));
 
         Button eonSpringsButton = new Button("Eon Springs");
-        eonSpringsButton.setOnAction(e -> showMap(primaryStage, EON_SPRINGS_IMAGE_PATH, this::initializeTerrainMapForEonSprings, l=17, b=19));
+        eonSpringsButton.setOnAction(e -> showMap(primaryStage, EON_SPRINGS_IMAGE_PATH, () -> loadMap(Maps.EonSprings), l=17, b=19));
 
         Button pistonDamButton = new Button("Piston Dam");
-        pistonDamButton.setOnAction(e -> showMap(primaryStage, PISTON_DAM_IMAGE_PATH, this::initializeTerrainMapForPistonDam, l=14, b=26));
+        pistonDamButton.setOnAction(e -> showMap(primaryStage, PISTON_DAM_IMAGE_PATH, () -> loadMap(Maps.PistonDam), l=14, b=26));
 
         VBox menu = new VBox(10, littleIslandButton, eonSpringsButton, pistonDamButton);
         menu.setAlignment(Pos.CENTER);
@@ -153,144 +159,50 @@ public class Karte extends Application {
         primaryStage.show();
     }
 
-    
-    // Helper method to initialize terrainMap for Little Island
-    private void initializeTerrainMapForLittleIsland() {
 
-        terrainMap = new TerrainType[10][19]; // 20x20 grid
-        // Example initialization for Little Island
-        terrainMap = new TerrainType[][]{
-            {TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,},
-            {TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.LAND, TerrainType.LAND, TerrainType.FOREST, TerrainType.WATER,},
-            {TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.FOREST, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.WATER,},
-            {TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.LAND, TerrainType.LAND, TerrainType.ROAD, TerrainType.LAND, TerrainType.WATER,},
-            {TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.LAND, TerrainType.LAND, TerrainType.ROAD, TerrainType.LAND, TerrainType.WATER,},
-            {TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.FOREST, TerrainType.LAND, TerrainType.LAND, TerrainType.ROAD, TerrainType.FOREST, TerrainType.WATER,},
-            {TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.LAND, TerrainType.FOREST, TerrainType.FOREST, TerrainType.ROAD, TerrainType.LAND, TerrainType.WATER,},
-            {TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.MOUNTAIN, TerrainType.FOREST, TerrainType.LAND, TerrainType.FOREST, TerrainType.ROAD, TerrainType.WATER, TerrainType.WATER,},
-            {TerrainType.WATER, TerrainType.WATER, TerrainType.LAND, TerrainType.LAND, TerrainType.FOREST, TerrainType.LAND, TerrainType.LAND, TerrainType.ROAD, TerrainType.WATER, TerrainType.WATER,},
-            {TerrainType.WATER, TerrainType.WATER, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.WATER, TerrainType.WATER,},
-            {TerrainType.WATER, TerrainType.WATER, TerrainType.ROAD, TerrainType.LAND, TerrainType.LAND, TerrainType.FOREST, TerrainType.LAND, TerrainType.LAND, TerrainType.WATER, TerrainType.WATER,},
-            {TerrainType.WATER, TerrainType.WATER, TerrainType.ROAD, TerrainType.FOREST, TerrainType.LAND, TerrainType.FOREST, TerrainType.MOUNTAIN, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,},
-            {TerrainType.WATER, TerrainType.LAND, TerrainType.ROAD, TerrainType.LAND, TerrainType.LAND, TerrainType.FOREST, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,},
-            {TerrainType.WATER, TerrainType.FOREST, TerrainType.ROAD, TerrainType.LAND, TerrainType.FOREST, TerrainType.LAND, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,},
-            {TerrainType.WATER, TerrainType.LAND, TerrainType.ROAD, TerrainType.LAND, TerrainType.LAND, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,},
-            {TerrainType.WATER, TerrainType.LAND, TerrainType.ROAD, TerrainType.LAND, TerrainType.FOREST, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,},
-            {TerrainType.WATER, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,},
-            {TerrainType.WATER, TerrainType.FOREST, TerrainType.LAND, TerrainType.LAND, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,},
-            {TerrainType.WATER, TerrainType.ROAD, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,},
-
-        };
+    enum Maps{
+        EonSprings,
+        LittleIsland,
+        PistonDam
     }
 
-    // Helper method to initialize terrainMap for Eon Springs
-    private void initializeTerrainMapForEonSprings() {
+    private void loadMap(Maps chosenMap) {
+        try{
+            String mapFile = "";
+
+            switch (chosenMap){
+                case EonSprings:
+                    mapFile = "resources/files/EonSprings.csv";
+                    terrainMap = new TerrainType[19][17];
+                    break;
+                case LittleIsland:
+                    mapFile = "resources/files/LittleIsland.csv";
+                    terrainMap = new TerrainType[10][19];
+                    break;
+                case PistonDam:
+                    mapFile = "resources/files/PistonDam.csv";
+                    terrainMap = new TerrainType[14][26];
+                    break;
+                default:
+                    System.out.println("Map nicht vorhanden");
+            }
+
+            BufferedReader reader = new BufferedReader(new FileReader(mapFile));
+
+            String line = null;
+
+            for(int columns = 0; columns < terrainMap.length-1; columns++){
+                line = reader.readLine();
+                String[] rowString = line.split(",");
+                for(int rows = 0; rows < terrainMap[0].length-1; rows++){
+                    terrainMap[columns][rows] = TerrainType.valueOf(rowString[rows]);
+                }
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        }
 
 
-        terrainMap = new TerrainType[19][17]; // 15x15 grid
-        // Example initialization for Eon Springs
-        terrainMap = new TerrainType[][]{
-            {TerrainType.FOREST, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.WATER, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND,
-             TerrainType.LAND, TerrainType.LAND, TerrainType.MOUNTAIN, TerrainType.LAND, TerrainType.LAND,TerrainType.FOREST, TerrainType.FOREST},
-            {TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.ROAD, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.MOUNTAIN,
-             TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.FOREST, TerrainType.LAND,TerrainType.LAND, TerrainType.LAND},
-            {TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.FOREST, TerrainType.WATER, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.ROAD, TerrainType.ROAD,
-             TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD,TerrainType.ROAD, TerrainType.ROAD},
-            {TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.WATER, TerrainType.WATER, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.ROAD, TerrainType.LAND,
-             TerrainType.LAND, TerrainType.FOREST, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND,TerrainType.LAND, TerrainType.ROAD},
-            {TerrainType.FOREST, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.FOREST, TerrainType.FOREST, TerrainType.LAND, TerrainType.ROAD, TerrainType.FOREST,
-             TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.FOREST, TerrainType.LAND,TerrainType.LAND, TerrainType.ROAD},
-            {TerrainType.ROAD, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.ROAD, TerrainType.FOREST,
-             TerrainType.FOREST, TerrainType.FOREST, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND,TerrainType.LAND, TerrainType.ROAD},
-            {TerrainType.ROAD, TerrainType.MOUNTAIN, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.ROAD, TerrainType.ROAD, TerrainType.WATER,
-             TerrainType.WATER, TerrainType.WATER, TerrainType.MOUNTAIN, TerrainType.LAND, TerrainType.FOREST,TerrainType.FOREST, TerrainType.ROAD},
-            {TerrainType.ROAD, TerrainType.FOREST, TerrainType.FOREST, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.ROAD, TerrainType.ROAD, TerrainType.WATER, TerrainType.WATER,
-             TerrainType.WATER, TerrainType.WATER, TerrainType.FOREST, TerrainType.LAND, TerrainType.LAND,TerrainType.FOREST, TerrainType.ROAD},
-            {TerrainType.ROAD, TerrainType.LAND, TerrainType.LAND, TerrainType.FOREST, TerrainType.WATER, TerrainType.WATER, TerrainType.LAND, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,
-             TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.LAND, TerrainType.LAND,TerrainType.LAND, TerrainType.ROAD},
-            {TerrainType.ROAD, TerrainType.LAND, TerrainType.LAND, TerrainType.FOREST, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,
-             TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.FOREST, TerrainType.LAND,TerrainType.LAND, TerrainType.ROAD},
-            {TerrainType.ROAD, TerrainType.LAND, TerrainType.LAND, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,
-             TerrainType.LAND, TerrainType.WATER, TerrainType.WATER, TerrainType.LAND, TerrainType.FOREST,TerrainType.LAND, TerrainType.ROAD},
-            {TerrainType.ROAD, TerrainType.LAND, TerrainType.LAND, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.ROAD,
-             TerrainType.ROAD, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.LAND,TerrainType.LAND, TerrainType.ROAD},
-            {TerrainType.ROAD, TerrainType.LAND, TerrainType.FOREST, TerrainType.LAND, TerrainType.MOUNTAIN, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.ROAD, TerrainType.ROAD,
-             TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,TerrainType.FOREST, TerrainType.ROAD},
-            {TerrainType.ROAD, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.ROAD, TerrainType.WATER,
-             TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,TerrainType.WATER, TerrainType.ROAD},
-            {TerrainType.ROAD, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.ROAD, TerrainType.FOREST,
-             TerrainType.FOREST, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,TerrainType.WATER, TerrainType.FOREST},
-            {TerrainType.ROAD, TerrainType.LAND, TerrainType.LAND, TerrainType.FOREST, TerrainType.LAND, TerrainType.FOREST, TerrainType.LAND, TerrainType.FOREST, TerrainType.ROAD, TerrainType.LAND,
-             TerrainType.LAND, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,TerrainType.LAND, TerrainType.LAND},
-            {TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.LAND,
-             TerrainType.LAND, TerrainType.LAND, TerrainType.WATER, TerrainType.LAND, TerrainType.FOREST,TerrainType.LAND, TerrainType.LAND},
-            {TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.MOUNTAIN, TerrainType.FOREST, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND,
-             TerrainType.LAND, TerrainType.LAND, TerrainType.ROAD, TerrainType.LAND, TerrainType.LAND,TerrainType.LAND, TerrainType.LAND},
-            {TerrainType.FOREST, TerrainType.LAND, TerrainType.FOREST, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.FOREST, TerrainType.LAND,
-             TerrainType.LAND, TerrainType.MOUNTAIN, TerrainType.WATER, TerrainType.LAND, TerrainType.LAND,TerrainType.LAND, TerrainType.FOREST},
-              
-        };
-    }
-
-    // Helper method to initialize terrainMap for Piston Dam
-    private void initializeTerrainMapForPistonDam() {
-        terrainMap = new TerrainType[26][14]; // 10x10 grid
-        // Example initialization for Piston Dam
-        terrainMap = new TerrainType[][]{
-            {TerrainType.LAND, TerrainType.FOREST, TerrainType.FOREST, TerrainType.LAND, TerrainType.LAND, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.LAND,
-             TerrainType.LAND, TerrainType.FOREST, TerrainType.FOREST, TerrainType.LAND},
-            {TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.LAND,
-             TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND},
-            {TerrainType.LAND, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD,
-             TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.LAND},
-            {TerrainType.FOREST, TerrainType.ROAD, TerrainType.FOREST, TerrainType.LAND, TerrainType.LAND, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.LAND,
-             TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.FOREST},
-            {TerrainType.FOREST, TerrainType.ROAD, TerrainType.LAND, TerrainType.FOREST, TerrainType.LAND, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.FOREST,
-             TerrainType.LAND, TerrainType.LAND, TerrainType.ROAD, TerrainType.FOREST},
-            {TerrainType.LAND, TerrainType.ROAD, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.FOREST,
-             TerrainType.LAND, TerrainType.LAND, TerrainType.ROAD, TerrainType.LAND},
-            {TerrainType.LAND, TerrainType.ROAD, TerrainType.FOREST, TerrainType.LAND, TerrainType.LAND, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.FOREST,
-             TerrainType.LAND, TerrainType.LAND, TerrainType.ROAD, TerrainType.LAND},
-            {TerrainType.LAND, TerrainType.ROAD, TerrainType.LAND, TerrainType.LAND, TerrainType.FOREST, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.LAND,
-             TerrainType.LAND, TerrainType.LAND, TerrainType.ROAD, TerrainType.LAND},
-            {TerrainType.LAND, TerrainType.ROAD, TerrainType.LAND, TerrainType.FOREST, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,
-             TerrainType.LAND, TerrainType.LAND, TerrainType.ROAD, TerrainType.LAND},
-            {TerrainType.LAND, TerrainType.ROAD, TerrainType.FOREST, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,
-             TerrainType.WATER, TerrainType.LAND, TerrainType.ROAD, TerrainType.LAND},
-            {TerrainType.LAND, TerrainType.ROAD, TerrainType.LAND, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.LAND, TerrainType.FOREST, TerrainType.WATER, TerrainType.WATER,
-             TerrainType.WATER, TerrainType.LAND, TerrainType.ROAD, TerrainType.LAND},
-            {TerrainType.FOREST, TerrainType.ROAD, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.FOREST,
-             TerrainType.FOREST, TerrainType.FOREST, TerrainType.ROAD, TerrainType.FOREST},
-            {TerrainType.FOREST, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD,
-             TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.FOREST},
-            {TerrainType.FOREST, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD,
-             TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.FOREST},
-            {TerrainType.FOREST, TerrainType.ROAD, TerrainType.FOREST, TerrainType.FOREST, TerrainType.FOREST, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.FOREST,
-             TerrainType.FOREST, TerrainType.FOREST, TerrainType.ROAD, TerrainType.FOREST},
-            {TerrainType.LAND, TerrainType.ROAD, TerrainType.LAND, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.LAND, TerrainType.FOREST, TerrainType.WATER, TerrainType.WATER,
-             TerrainType.WATER, TerrainType.LAND, TerrainType.ROAD, TerrainType.LAND},
-            {TerrainType.LAND, TerrainType.ROAD, TerrainType.LAND, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,
-             TerrainType.WATER, TerrainType.LAND, TerrainType.ROAD, TerrainType.LAND},
-            {TerrainType.LAND, TerrainType.ROAD, TerrainType.FOREST, TerrainType.FOREST, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER,
-             TerrainType.LAND, TerrainType.FOREST, TerrainType.ROAD, TerrainType.LAND},
-            {TerrainType.LAND, TerrainType.ROAD, TerrainType.LAND, TerrainType.LAND, TerrainType.FOREST, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.LAND,
-             TerrainType.FOREST, TerrainType.LAND, TerrainType.ROAD, TerrainType.LAND},
-            {TerrainType.LAND, TerrainType.ROAD, TerrainType.LAND, TerrainType.FOREST, TerrainType.LAND, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.FOREST,
-             TerrainType.LAND, TerrainType.LAND, TerrainType.ROAD, TerrainType.LAND},
-            {TerrainType.LAND, TerrainType.ROAD, TerrainType.FOREST, TerrainType.LAND, TerrainType.LAND, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.FOREST,
-             TerrainType.LAND, TerrainType.LAND, TerrainType.ROAD, TerrainType.LAND},
-            {TerrainType.FOREST, TerrainType.ROAD, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.FOREST,
-             TerrainType.LAND, TerrainType.LAND, TerrainType.ROAD, TerrainType.FOREST},
-            {TerrainType.FOREST, TerrainType.ROAD, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.LAND,
-             TerrainType.LAND, TerrainType.LAND, TerrainType.ROAD, TerrainType.FOREST},
-            {TerrainType.LAND, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD,
-             TerrainType.ROAD, TerrainType.ROAD, TerrainType.ROAD, TerrainType.LAND},
-            {TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.LAND, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.LAND,
-             TerrainType.LAND, TerrainType.LAND, TerrainType.ROAD, TerrainType.LAND},
-            {TerrainType.LAND, TerrainType.LAND, TerrainType.FOREST, TerrainType.FOREST, TerrainType.LAND, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.WATER, TerrainType.LAND,
-             TerrainType.LAND, TerrainType.FOREST, TerrainType.FOREST, TerrainType.LAND},
-        };
-    }
 
     // Method to center the stage on the screen
     private void centerStage(Stage stage, double windowWidth, double windowHeight) {

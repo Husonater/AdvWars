@@ -10,7 +10,5 @@ public class GUI {
         Bomber bomber1 = new Bomber();
         BattleCopter battleCopter1 = new BattleCopter();
         AntiAir antiAir1 = new AntiAir();
-
-        
     }
 }
