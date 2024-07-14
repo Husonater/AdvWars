@@ -148,7 +148,7 @@ public class Karte extends Application {
                     break;
                 case LittleIsland:
                     mapFile = "resources/files/LittleIsland.csv";
-                    terrainMap = new TerrainType[10][19];
+                    terrainMap = new TerrainType[19][10];
                     break;
                 case PistonDam:
                     mapFile = "resources/files/PistonDam.csv";
