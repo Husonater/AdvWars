@@ -205,8 +205,8 @@ public class Karte extends Application {
 
     
     //Diese Funktion sollte eigentlich überprüfen ob beim Input des mauszeigers eine Einheit steht
-    /*private boolean displayMove(int gridX, int gridY) {
-    Troops[] team1 = GUI.createTeam1();
+    private boolean displayMove(int gridX, int gridY) {
+    Troops[] team1 = GUI.createTeam1();                 //javac --module-path C:\javaprj\javafx-sdk-23\lib --add-modules javafx.controls,javafx.fxml -d bin C:\javaprj\AdvWar\fx\src/*.java  
     for (Troops troop : team1) {
         if (gridX == troop.x && gridY == troop.y) {
             System.out.println("troop here");
@@ -214,7 +214,7 @@ public class Karte extends Application {
         }
     }
     return false;
-}*/
+}
 
 
 
