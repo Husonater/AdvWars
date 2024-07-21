@@ -4,7 +4,7 @@ public abstract class Ground extends Troops {
     
 
     public Ground(){
-        this.characteristic = new String[]{"forest","land","road"};
+        this.characteristic = new String[]{"FOREST","LAND","ROAD"};
     }
     public int getStatus() {
         return status;

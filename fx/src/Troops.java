@@ -8,6 +8,7 @@ public abstract class Troops {
     int x;
     int y;
 
+    
 
     String[] characteristic; // welche Felder von welcher Truppe betreten werden darf (eigenschaften)
 
@@ -16,6 +17,8 @@ public abstract class Troops {
     public static class CharacteristicChecker {
 
         public static boolean isValidCharacteristic(String[] characteristics, String input) {
+            
+
             for (String charac : characteristics) {
                 if (charac.equalsIgnoreCase(input)) {
                     return true;
@@ -24,32 +27,38 @@ public abstract class Troops {
             return false;
         }
 
-        public static boolean checkCharacteristic(Troops troop, String input) {
-            if (isValidCharacteristic(troop.getCharacticis(), input)) {
-                switch (input.toLowerCase()) { // Ensure the input is handled case-insensitively
-                    case "water":
-                        return true;
-                    case "land":
-                        return true;
-                    case "sea":
-                        return true;
-                    case "forest":
-                        return true;
-                    default:
-                        return false;
-                }
-            } else {
-                return false;
+        
+    }
+    
+    public static boolean checkCharacteristic(Troops troop, String input) {
+        if (CharacteristicChecker.isValidCharacteristic(troop.getCharacticis(), input)) {
+            switch (input.toLowerCase()) { // Ensure the input is handled case-insensitively
+                case "water":
+                    return true;
+                case "land":
+                    return true;
+                case "sea":
+                    return true;
+                case "forest":
+                    return true;
+                default:
+                    return false;
             }
+        } else {
+            return false;
         }
     }
+
 
 
     // Ende Attribute
 
     public static void main(String[] args) {
-        firefight();
-
+        Troops team1;
+        team1 = new Soldier(2,8);
+        boolean a;
+        a = CharacteristicChecker.isValidCharacteristic(team1.getCharacticis(), "ROAD");
+        System.out.println(a);
     }
     // Anfang Methoden 
 
@@ -64,6 +73,7 @@ public abstract class Troops {
 
     }
     public String[] getCharacticis() {
+        
         return characteristic;
     }
     public int getUnitDamage() {
@@ -75,6 +85,13 @@ public abstract class Troops {
     public void setHealth(int health) {
         this.health = health;
     }
+    public void sety(int y) {
+        this.y = y;
+    }
+    public void setx(int x) {
+        this.x = x;
+    }
+    
     
     
     

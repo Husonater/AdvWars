@@ -23,6 +23,11 @@ public class Karte extends Application {
 
     int l;
     int b;
+    private boolean firstCall = true;
+    Troops troopsone;
+    Troops attackedOnUnit;
+    Troops[] team1 = GUI.createTeam1();
+    Troops[] team2 = GUI.createTeam2(); 
 
     private static final String LITTLE_ISLAND_IMAGE_PATH = "file:resources/images/LittleIsland.png";
     private static final String EON_SPRINGS_IMAGE_PATH = "file:resources/images/EonSprings.png";
@@ -99,7 +104,7 @@ public class Karte extends Application {
 
             int gridX = (int) (mouseX / (MAP_WIDTH / b)); // 20 is the number of columns
             int gridY = (int) (mouseY / (MAP_HEIGHT / l)); // 20 is the number of rows
-            //displayMove(gridX, gridY);
+            displayMove(gridX, gridY);
             // Display the terrain type behind the clicked grid
             displayTerrainType(gridX, gridY);
         });
@@ -191,7 +196,7 @@ public class Karte extends Application {
         stage.setX(centerX);
         stage.setY(centerY);
     }
-
+    //javac --module-path C:\javaprj\javafx-sdk-23\lib --add-modules javafx.controls,javafx.fxml -d bin C:\javaprj\AdvWar\fx\src/*.java
     // Method to display the terrain type at the specified grid coordinates
     private void displayTerrainType(int gridX, int gridY) {
         if (terrainMap != null && gridX >= 0 && gridX < terrainMap.length && gridY >= 0 && gridY < terrainMap[0].length) {
@@ -204,18 +209,65 @@ public class Karte extends Application {
     }
     
     private boolean displayMove(int gridX, int gridY) {
-    Troops[] team1 = GUI.createTeam1();                 //javac --module-path C:\javaprj\javafx-sdk-23\lib --add-modules javafx.controls,javafx.fxml -d bin C:\javaprj\AdvWar\fx\src/*.java  
+    
+
+    String terrainType = terrainMap[gridX][gridY].toString();
+    
+    
+     
     for (Troops troop : team1) {
         if (gridX == troop.x && gridY == troop.y) {
+            
             System.out.println("troop here");
-            return true;
+            
+            if (firstCall == false){
+                attackedOnUnit = troop;
+                Gamehandler.Fight(troopsone.x, troopsone.y,troopsone, attackedOnUnit);
+                
+                firstCall = true;
+                return true;
+            }else{
+            troopsone = troop;
+            firstCall = false;
+            return true;}
         }
     }
-    return false;
+    for (Troops troop : team2)  {
+        if (gridX == troop.x && gridY == troop.y) {
+            System.out.println("troop here");
+            
+            if (firstCall == false){
+                attackedOnUnit = troop;
+                Gamehandler.Fight(troopsone.x,troopsone.y,troopsone, attackedOnUnit);
+                
+                firstCall = true;
+                return false;
+            }else{
+            troopsone = troop;
+            firstCall = false;
+            return true;  
+            }
+        }
+    }
+    if (firstCall == false){
+        if (Gamehandler.moverangeadaption(troopsone, gridX, gridY, terrainType) == true){
+            System.out.println("ok");
+            
+            firstCall = true;
+            troopsone = null;
+            return true;
+        }else {
+            firstCall = true;
+            troopsone = null;
+            return true;
+        }    
+        
+    } 
+    return true;
 }
-
+    
 
 
 
     
-}
+    }
