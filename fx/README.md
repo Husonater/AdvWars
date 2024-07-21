@@ -9,7 +9,9 @@ Die Terrains sind definiert und mit Maus Click auf die Karte werden sie mit Koor
 Die Klass Troops ist die Superklasse von Air und Ground. Ground ist die Superklasse von allen Bodeneinheiten.
 Air ist die Superklasse von allen Lufteinheiten.
 
-Fehlende Funktionen sind das Platzieren der Truppen und das bewegen der Truppen.
+Die Objekte werden auf die Karte platziert, die start Werte werden in der GUI mitgegeben. Symbole fuer die Truppen
+sind nicht auf der Karte.
+
 
 Idee von uns war es mithilfe dem erstellten  Grid/Array in der Klasse Karte die position mit einer getMethode abzurufen
 und somit zu ermitteln ob eine Truppe auf dem Feld steht und wenn ja diese dan bewegen zu koenne.
