@@ -11,8 +11,3 @@ Air ist die Superklasse von allen Lufteinheiten.
 
 Die Objekte werden auf die Karte platziert, die start Werte werden in der GUI mitgegeben. Symbole fuer die Truppen
 sind nicht auf der Karte.
-
-
-Idee von uns war es mithilfe dem erstellten  Grid/Array in der Klasse Karte die position mit einer getMethode abzurufen
-und somit zu ermitteln ob eine Truppe auf dem Feld steht und wenn ja diese dan bewegen zu koenne.
--> Problem wir haben die Methode fuer das bestaetigen eines besetzten Feldes nicht umseten koenne, da JavaFX sehr unhandlich ist.
