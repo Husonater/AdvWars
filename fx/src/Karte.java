@@ -217,13 +217,15 @@ public class Karte extends Application {
      
     for (Troops troop : team1) {
         if (gridX == troop.x && gridY == troop.y) {
-            
             System.out.println("troop here");
             
             if (firstCall == false){
                 attackedOnUnit = troop;
+                System.out.println("Angriffseinheit " + troopsone);
+                System.out.println("Verteidigungseinheit " + attackedOnUnit);
                 Gamehandler.Fight(troopsone.x, troopsone.y,troopsone, attackedOnUnit);
                 
+
                 firstCall = true;
                 return true;
             }else{
@@ -238,6 +240,8 @@ public class Karte extends Application {
             
             if (firstCall == false){
                 attackedOnUnit = troop;
+                System.out.println("Angriffseinheit " + troopsone);
+                System.out.println("Verteidigungseinheit " + attackedOnUnit);
                 Gamehandler.Fight(troopsone.x,troopsone.y,troopsone, attackedOnUnit);
                 
                 firstCall = true;
@@ -251,7 +255,7 @@ public class Karte extends Application {
     }
     if (firstCall == false){
         if (Gamehandler.moverangeadaption(troopsone, gridX, gridY, terrainType) == true){
-            System.out.println("ok");
+            
             
             firstCall = true;
             troopsone = null;

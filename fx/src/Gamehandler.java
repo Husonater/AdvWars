@@ -12,6 +12,7 @@ public class Gamehandler {
         
         if (Troops.CharacteristicChecker.isValidCharacteristic(troop.getCharacticis(), terrainType ) == true){
             if (moverangeCalculation(x, y, troop) == true){
+                
                 troop.setx(x);
                 troop.sety(y);
                 return true;
